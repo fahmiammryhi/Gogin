@@ -1,5 +1,8 @@
-migrate create -ext sql -dir database/migrations -seq create_users_table
-migrate create -ext sql -dir database/migrations create_books_table
-migrate create -ext sql -dir database/migrations -seq create_books_table //(dengan sequence)
-migrate -database "mysql://root:@tcp(127.0.0.1:3306)/gogin" -path database/migrations up
-migrate -database "mysql://root:@tcp(127.0.0.1:3306)/gogin" -path database/migrations down
+migrate create -ext sql -dir databases/migrations -seq create_users_table
+migrate create -ext sql -dir databases/migrations create_books_table
+migrate create -ext sql -dir databases/migrations -seq create_books_table //(dengan sequence)
+migrate create -ext sql -dir databases/migrations -seq create_adm_roles_table
+migrate create -ext sql -dir databases/migrations -seq create_adm_menu_roles_table
+migrate create -ext sql -dir databases/migrations -seq create_adm_menus_table
+migrate -database "mysql://root:@tcp(127.0.0.1:3306)/gogin" -path databases/migrations up
+migrate -database "mysql://root:@tcp(127.0.0.1:3306)/gogin" -path databases/migrations down
