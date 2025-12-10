@@ -12,7 +12,6 @@ import (
 	"time"
 
 	"github.com/gin-gonic/gin"
-	"github.com/go-playground/validator/v10"
 )
 
 func UserControllersRead(ctx *gin.Context) {
@@ -74,21 +73,11 @@ func UserControllersReadByID(ctx *gin.Context) {
 
 func UserControllersCreate(ctx *gin.Context) {
 	userRequest := new(administratorRequest.UserRequest)
+	// var userRequest administratorRequest.UserRequest
 	if err := ctx.ShouldBindJSON(userRequest); err != nil {
 		ctx.JSON(http.StatusBadRequest, gin.H{
 			"message": "Bad Request",
 			"error":   err.Error(),
-		})
-		return
-	}
-
-	// Validasi request
-	validate := validator.New()
-	errValidate := validate.Struct(userRequest)
-	if errValidate != nil {
-		ctx.JSON(http.StatusBadRequest, gin.H{
-			"message": "Failed",
-			"error":   errValidate.Error(),
 		})
 		return
 	}
@@ -162,7 +151,7 @@ func UserControllersCreate(ctx *gin.Context) {
 }
 
 func UserControllersUpdate(ctx *gin.Context) {
-	canEdit, errEdit := middleware.CheckMenuPermission(ctx, "1.2.1.1", "isEdit")
+	canEdit, errEdit := middleware.CheckMenuPermission(ctx, "1.2.1.4", "isEdit")
 	if errEdit != nil {
 		utils.ErrorResponse(ctx, http.StatusUnauthorized, errEdit.Error())
 		return
@@ -176,7 +165,7 @@ func UserControllersUpdate(ctx *gin.Context) {
 }
 
 func UserControllersDelete(ctx *gin.Context) {
-	canDelete, errDelete := middleware.CheckMenuPermission(ctx, "1.2.1.1", "isDelete")
+	canDelete, errDelete := middleware.CheckMenuPermission(ctx, "1.2.1.5", "isDelete")
 	if errDelete != nil {
 		utils.ErrorResponse(ctx, http.StatusUnauthorized, errDelete.Error())
 		return
@@ -185,8 +174,4 @@ func UserControllersDelete(ctx *gin.Context) {
 		utils.ErrorResponse(ctx, http.StatusForbidden, "User tidak memiliki akses untuk menghapus data User")
 		return
 	}
-
-	// ... kode delete Anda
 }
-
-
